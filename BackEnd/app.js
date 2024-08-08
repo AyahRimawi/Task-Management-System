@@ -18,19 +18,21 @@ const express = require("express");
 // بالتالي انا بحاجة لإشي يحول هاي البيانات من json الى object ومين سيد القوم الي يقوم بهالحكي هو صديقنا bodyParser
 // واذا ببالك سؤال ليش السيرفر بحول من json الى Object بكل بساطة لحتى يعرف يتفاهم معها بشكل ابسط
 // غالبًا ما تحتاج إلى تحويل البيانات إلى كائنات JavaScript لتخزينها أو إدخالها في قواعد البيانات. قواعد البيانات مثل MongoDB، PostgreSQL، وغيرها تتطلب البيانات في شكل كائنات يمكن التعامل معها برمجياً.
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 // -------
 // هون بحكي بال app تبعي استخدم يا سيدي العزيز لل body الي حامل ال html لتحول ال json
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 //-------
 //صديقتنا الملازمة لأي تحويل من  json الى object و ذلك لفك التشفير لحتى يستوعب ال server عليها شو بتعمل
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 // ***************
 // ملاحظة من ذهب:
 // بدءًا من Express 4.16.0، تم دمج ميزات body-parser الأساسية مباشرة في Express. يمكنك استخدام express.json() و express.urlencoded() لتحقيق نفس الأغراض دون الحاجة لتثبيت body-parser بشكل منفصل.
 // انا حاليا مو بحاجة ل bodyParser لأنو خلص express تحدث وصار يعتمد ع حاله بالتحويل فبكتب بدون ما انزل اشي وعجقة ودنيا وعالم
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // ***************
 // ========== ********** ==========
 
@@ -47,7 +49,6 @@ const PORT = 5000;
 // عملت module خاصة في واعطيتها path واضح وصريح وهلأ داخل هاد ال module رح تلاقي اني عامل الها exports
 const userRoutes = require("./Routes/userRouters");
 
-const app = express();
 
 app.use("/api/users", userRoutes);
 

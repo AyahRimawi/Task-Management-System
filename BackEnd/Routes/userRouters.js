@@ -8,7 +8,7 @@ const router = express.Router();
 const userController = require("../Controllers/userController");
 
 // نفس الفكرة بعمل module خاصة في لل auth
-const auth = require("../middlewares/auth");
+// const auth = require("../middlewares/auth");
 
 // هلأ انا استخدمت post ل data بكل بساطة حسب الطريقة الي انا الي طلبت منها بال front يجيب ال data
 // المسار الي اعطيته بال front هون حددته بدقة 
@@ -17,6 +17,6 @@ router.post("/register", userController.register);
 
 router.post("/login", userController.login);
 
-router.post("/view", auth, userController.view);
+// router.post("/view", auth, userController.view);
 
 module.exports = router;
