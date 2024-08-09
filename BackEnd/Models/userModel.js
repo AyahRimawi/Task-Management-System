@@ -23,30 +23,44 @@ class User {
   // هلأ بدي انشأ للمستخدم حساب عنا بكل بساطة بعطي وعد اني رح انشأه
   // وبستخدم دالة الانشاء الثابتة الي هي createUser
   static async createUser(name, email, password) {
-    //  =======
-    // مش حكينا اول ما انشئ حساب بشفر كلمة المرور
-    // bcrypt هي مكتبة تُستخدم لتشفير كلمات المرور وتخزينها بشكل آمن
-    // hash هي دالة داخل مكتبة bcrypt تُستخدم لتحويل كلمة المرور إلى سلسلة مشفرة
-    // هلأ هاي ال hash بتحط ملح وهي قاعدة بتشفر اي لتعطي امان اكبر بتاخد قيمتين
-    // الاولى:الكلمة الي بدي اشفرها التانية: الي هي salt rounds اي عدد مرات تطبيق التشفير
-    // كل ما زاد الرقم زاد الامان لكن رح ياخد وقت اطول
-    const hashedPassword = await bcrypt.hash(password, 10);
-    //  =======
-    // هون حكينا قبل انو pool.query يعني ارسل استعلام sql الى قاعدة البيانات من خلال الاتصال pool
-    const result = await pool.query(
-      // الاستعلام الي بعته انو انشئ حساب لل user عندك هناك
-      // ... للحديث بقية
-      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, hashedPassword]
-    );
-    return result.rows[0];
-  }
+    try {
+      console.log("Hashing password");
 
+      //  =======
+      // مش حكينا اول ما انشئ حساب بشفر كلمة المرور
+      // bcrypt هي مكتبة تُستخدم لتشفير كلمات المرور وتخزينها بشكل آمن
+      // hash هي دالة داخل مكتبة bcrypt تُستخدم لتحويل كلمة المرور إلى سلسلة مشفرة
+      // هلأ هاي ال hash بتحط ملح وهي قاعدة بتشفر اي لتعطي امان اكبر بتاخد قيمتين
+      // الاولى:الكلمة الي بدي اشفرها التانية: الي هي salt rounds اي عدد مرات تطبيق التشفير
+      // كل ما زاد الرقم زاد الامان لكن رح ياخد وقت اطول
+      const hashedPassword = await bcrypt.hash(password, 10);
+      console.log("Password hashed successfully");
+
+      //  =======
+      // هون حكينا قبل انو pool.query يعني ارسل استعلام sql الى قاعدة البيانات من خلال الاتصال pool
+
+      console.log("Inserting user into database");
+
+      const result = await pool.query(
+        // الاستعلام الي بعته انو انشئ حساب لل user عندك هناك
+        // ... للحديث بقية
+        "INSERT INTO users_db (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+        [name, email, hashedPassword]
+      );
+      console.log("User inserted successfully");
+
+      return result.rows[0];
+    } catch (err) {
+      console.error("Error creating user:", err); // تأكد من تسجيل الأخطاء بشكل مناسب
+      throw err;
+    }
+  }
   static async findByEmail(email) {
     try {
-      const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-        email,
-      ]);
+      const result = await pool.query(
+        "SELECT * FROM users_db WHERE email = $1",
+        [email]
+      );
       return result.rows[0];
     } catch (err) {
       console.error("Error finding user by email:", err);

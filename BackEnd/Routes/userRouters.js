@@ -6,6 +6,7 @@ const router = express.Router();
 // بتذكر لما شرحت ال module وحكيت ممكن اعمل وحدة خاصة في بس بعطيها مسار ثابت وهاد الي صار هون 
 // عملت module خاصة في واعطيتها path واضح وصريح وهلأ داخل هاد ال module رح تلاقي اني عامل الها exports
 const userController = require("../Controllers/userController");
+const auth = require("../Middlewares/auth");
 
 // نفس الفكرة بعمل module خاصة في لل auth
 // const auth = require("../middlewares/auth");
@@ -17,6 +18,6 @@ router.post("/register", userController.register);
 
 router.post("/login", userController.login);
 
-// router.post("/view", auth, userController.view);
+router.post("/view", auth, userController.view);
 
 module.exports = router;

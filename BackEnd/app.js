@@ -6,9 +6,7 @@
 // بعد التنزيل صار الوقت بكل بساطة نعمل الهم require عنا ونحكي الغاية من وجودهم
 // **********************************************
 
-// dotenv الفكرة من وجودها في حال ناديت اشي من .env هاي صديقتها الصدوقة الي بتساعدك تنادي اي شي بدك اياه
-require("dotenv").config();
-// ========== ********** ==========
+
 
 // نادينا صديقتنا العزيزة express لحتى نعمل مصادقة معها ونشغل البرنامج تبعنا
 const express = require("express");
@@ -29,6 +27,11 @@ const express = require("express");
 // ملاحظة من ذهب:
 // بدءًا من Express 4.16.0، تم دمج ميزات body-parser الأساسية مباشرة في Express. يمكنك استخدام express.json() و express.urlencoded() لتحقيق نفس الأغراض دون الحاجة لتثبيت body-parser بشكل منفصل.
 // انا حاليا مو بحاجة ل bodyParser لأنو خلص express تحدث وصار يعتمد ع حاله بالتحويل فبكتب بدون ما انزل اشي وعجقة ودنيا وعالم
+
+// dotenv الفكرة من وجودها في حال ناديت اشي من .env هاي صديقتها الصدوقة الي بتساعدك تنادي اي شي بدك اياه
+require("dotenv").config();
+// ========== ********** ==========
+
 const app = express();
 
 app.use(express.json());
@@ -49,6 +52,7 @@ const PORT = 5000;
 // عملت module خاصة في واعطيتها path واضح وصريح وهلأ داخل هاد ال module رح تلاقي اني عامل الها exports
 const userRoutes = require("./Routes/userRouters");
 
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 
 app.use("/api/users", userRoutes);
 
