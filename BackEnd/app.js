@@ -6,8 +6,6 @@
 // بعد التنزيل صار الوقت بكل بساطة نعمل الهم require عنا ونحكي الغاية من وجودهم
 // **********************************************
 
-
-
 // نادينا صديقتنا العزيزة express لحتى نعمل مصادقة معها ونشغل البرنامج تبعنا
 const express = require("express");
 // ========== ********** ==========
@@ -48,12 +46,15 @@ app.use(cors());
 const PORT = 5000;
 // ========== ********** ==========
 
-// بتذكر لما شرحت ال module وحكيت ممكن اعمل وحدة خاصة في بس بعطيها مسار ثابت وهاد الي صار هون 
+// بتذكر لما شرحت ال module وحكيت ممكن اعمل وحدة خاصة في بس بعطيها مسار ثابت وهاد الي صار هون
 // عملت module خاصة في واعطيتها path واضح وصريح وهلأ داخل هاد ال module رح تلاقي اني عامل الها exports
 const userRoutes = require("./Routes/userRouters");
+
+const taskRoutes = require("./Routes/taskRouters");
 
 console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 
 app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

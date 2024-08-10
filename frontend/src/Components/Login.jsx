@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -55,12 +56,14 @@ const Login = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-teal-700 text-white py-2 rounded-md hover:bg-teal-800 transition-colors duration-200"
-          >
-            Login
-          </button>
+          <Link to={"/Task"}>
+            <button
+              type="submit"
+              className="w-full bg-teal-700 text-white py-2 rounded-md hover:bg-teal-800 transition-colors duration-200"
+            >
+              Login
+            </button>
+          </Link>
         </form>
       </div>
     </div>

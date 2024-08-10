@@ -104,8 +104,18 @@ const login = async (req, res) => {
   }
 };
 
-view = async (req, res) => {
+const view = async (req, res) => {
   res.status(200).json({ message: "You can see data :)" });
 };
 
-module.exports = { register, login, view };
+
+const protectedRoute = (req, res) => {
+  res.status(200).json({
+    id: req.tokenValid.id,
+    username: req.tokenValid.username,
+    // أضف أي بيانات أخرى تريد إرجاعها هنا
+  });
+};
+
+
+module.exports = { register, login, view, protectedRoute };

@@ -1,11 +1,11 @@
 const express = require("express");
-// هي خاصية مدمجة في مكتبة express ومجرد ما جبتها عندي صار الوقت اعملها exports لأنها عبارة coustum module
+// ال router هي خاصية مدمجة في مكتبة express ومجرد ما جبتها عندي صار الوقت اعملها exports لأنها عبارة coustum module
 const router = express.Router();
 
 // بتذكر لما شرحت ال module وحكيت ممكن اعمل وحدة خاصة في بس بعطيها مسار ثابت وهاد الي صار هون
 // عملت module خاصة في واعطيتها path واضح وصريح وهلأ داخل هاد ال module رح تلاقي اني عامل الها exports
 const userController = require("../Controllers/userController");
-const auth = require("../Middlewares/auth");
+const auth = require("../middlewares/auth");
 
 // نفس الفكرة بعمل module خاصة في لل auth
 // const auth = require("../middlewares/auth");
@@ -18,6 +18,9 @@ router.post("/register", userController.register);
 
 // -------------
 // طلبات تسجيل الدخول
+router.get("/login", (req, res) => {
+  res.json("hello");
+});
 router.post("/login", userController.login);
 
 // ------------
@@ -28,5 +31,10 @@ router.post("/login", userController.login);
 // وطبعا لحتى ينفذ الي بعده بياخد ضمن ال parameter اي بجانب ال req res بكون عندي next
 
 router.post("/view", auth, userController.view);
+
+
+// تعريف المسار المحمي
+
+router.get("/protected-route", auth, userController.protectedRoute);
 
 module.exports = router;
