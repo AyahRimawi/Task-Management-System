@@ -1,3 +1,4 @@
+// خلي ببالك ال modele هو يمثل الجدول تبعنا
 //  بداية خليني احكي الغاية من وجود module بدي اوفر من خلاله وحدة او مستودع لتبادل الكود واعادة استخدامه
 // الشغلة التانية انا ليش بال module استخدمت class ما استخدمت function ??
 // لأنو ال class بسمحلي استخدم static methods وانادي عليها بطريقة بسيطة
@@ -46,7 +47,8 @@ class User {
       const result = await pool.query(
         // الاستعلام الي بعته انو انشئ حساب لل user عندك هناك
         // ... للحديث بقية
-        "INSERT INTO users_db (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+        // "INSERT INTO users_db (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+        "INSERT INTO users_db (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email",
         [name, email, hashedPassword]
       );
       console.log("User inserted successfully");

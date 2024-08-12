@@ -26,6 +26,8 @@ const register = async (req, res) => {
     // وهون بدأ انشاء المستخدم
     const newUser = await User.createUser(name, email, password);
     console.log("User created successfully:", newUser);
+    // تحقق من قيمة userId
+    console.log("New User ID:", newUser.id);
 
     // jwt تستخدم لإنشاء والتحقق من التوكن
     // jwt.sign هاي تستخدم لإنشاء التوكن
@@ -45,7 +47,12 @@ const register = async (req, res) => {
     // لاحظ بعتنا التوكن  يُستخدم لتوثيق الجلسة الحالية
     // وخبرنا انو انشئنا يوزر
     // وكمان بعتنى اله تفاصيل اليوزر اذا كان المستخدم بدو يستخدمها عنده
-    res.status(200).json({ token, message: "User created", newUser });
+    // -----------------
+    // res.status(200).json({ token, message: "User created", newUser });
+    res
+      .status(200)
+      .json({ token, userId: newUser.id, message: "User created", newUser });
+    // --------------------
     // res.status(200).json({ message: "User created", newUser });
   } catch (err) {
     console.error(err.message);
@@ -95,10 +102,17 @@ const login = async (req, res) => {
     // userValid غير فارغ (يعني أن المستخدم موجود).
     // isPasswordValid تساوي true (يعني أن كلمة المرور صحيحة).
     // وقتها يعني أن عملية تسجيل الدخول قد تمت بنجاح، ويُمنح المستخدم توكن للوصول.
+
+    // تحقق من قيمة userId
+    console.log("User ID for login:", userValid.id);
+
     const token = jwt.sign({ id: userValid.id }, JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ token });
+    // ----------------------
+    // res.json({ token });
+    res.json({ token, userId: userValid.id });
+    // -----------------------
   } else {
     res.status(401).json({ message: "Invalid credentials" });
   }
@@ -108,7 +122,6 @@ const view = async (req, res) => {
   res.status(200).json({ message: "You can see data :)" });
 };
 
-
 const protectedRoute = (req, res) => {
   res.status(200).json({
     id: req.tokenValid.id,
@@ -116,6 +129,5 @@ const protectedRoute = (req, res) => {
     // أضف أي بيانات أخرى تريد إرجاعها هنا
   });
 };
-
 
 module.exports = { register, login, view, protectedRoute };

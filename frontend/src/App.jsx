@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import Task from "./Page/Task";
+import Tasks from "./Page/Tasks";
 
 function App() {
   return (
@@ -14,11 +14,11 @@ function App() {
       </form> */}
       {/* <Register />
       <Login /> */}
-      {/* <Task /> */}
+      <Tasks />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
-        <Route path="/Task" element={<Task />} />
+        <Route path="/Tasks" element={<Tasks />} />
       </Routes>
     </>
   );
