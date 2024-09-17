@@ -1,0 +1,37 @@
+ملاحظة لحتى اشتغل هون بكل بساطة
+اول شي بنشأ db داخل ال sql 
+وهاد الاشي مانيولي باستخدام تيرمنل
+psql -U postgres
+create database اسم الجدول;
+----------------------------------------
+انشئ وحدة وحدة بالجدول
+-- show all database \l
+-- connect with data base  \c name od db
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'Customer',  -- 'Admin' or 'Customer'
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price NUMERIC NOT NULL,
+  quantity INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE cart_items (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  product_id INT REFERENCES products(id),
+  quantity INT NOT NULL,
+  added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
